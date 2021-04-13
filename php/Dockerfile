@@ -67,5 +67,8 @@ RUN set -x \
 RUN set -x \
         && echo 'date.timezone = "Asia/Bangkok"' | tee /usr/local/etc/php/conf.d/locale.ini \
         && echo 'default_charset = "utf-8"' | tee -a /usr/local/etc/php/conf.d/locale.ini \
-        && echo "cgi.fix_pathinfo = 1" | tee -a /usr/local/etc/php/conf.d/file.ini \
-        && echo "upload_max_filesize = 8M" | tee -a /usr/local/etc/php/conf.d/file.ini
+        && echo "memory_limit = 1024M" | tee /usr/local/etc/php/conf.d/memory-limit-php.ini \        
+        && echo "max_execution_time = 1200" | tee -a /usr/local/etc/php/conf.d/memory-limit-php.ini \        
+        && echo "max_input_time = 300" | tee -a /usr/local/etc/php/conf.d/memory-limit-php.ini \        
+        && echo "upload_max_filesize = 512M" | tee /usr/local/etc/php/conf.d/file.ini \
+        && echo "post_max_size = 512M" | tee -a /usr/local/etc/php/conf.d/file.ini         
