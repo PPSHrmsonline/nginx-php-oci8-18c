@@ -1,17 +1,17 @@
 FROM php:7.4-fpm
+FROM php:fpm
 
 ENV LD_LIBRARY_PATH /opt/oracle/instantclient_18_5
 ENV ORACLE_HOME /opt/oracle/instantclient_18_5
 
 RUN set -x \
-        && groupmod -g 1000 www-data \
-        && usermod -u 1000 -g 1000 www-data
+        && groupmod -g 500 www-data \
+        && usermod -u 500 www-data
 
 RUN set -x \
         && apt-get update \
         && apt-get -y upgrade \
         && apt-get install --no-install-recommends -y \
-               nginx \
                apt-transport-https \
                gnupg \
         && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
@@ -57,13 +57,11 @@ RUN set -x \
                 oci8 \
         && yes '' | pecl install -f \
                 mcrypt
-                
-RUN sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf                
 
 RUN set -x \
         && docker-php-ext-enable \
                 mcrypt \
-                oci8 \
+                oci8-2.2.0 \
                 opcache
 
 RUN set -x \
@@ -73,4 +71,4 @@ RUN set -x \
         && echo "max_execution_time = 1200" | tee -a /usr/local/etc/php/conf.d/memory-limit-php.ini \        
         && echo "max_input_time = 300" | tee -a /usr/local/etc/php/conf.d/memory-limit-php.ini \        
         && echo "upload_max_filesize = 512M" | tee /usr/local/etc/php/conf.d/file.ini \
-        && echo "post_max_size = 512M" | tee -a /usr/local/etc/php/conf.d/file.ini 
+        && echo "post_max_size = 512M" | tee -a /usr/local/etc/php/conf.d/file.ini         
