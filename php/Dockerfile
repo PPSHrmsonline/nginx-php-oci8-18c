@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:7.2-fpm
 
 ENV LD_LIBRARY_PATH /opt/oracle/instantclient_18_5
 ENV ORACLE_HOME /opt/oracle/instantclient_18_5
@@ -53,7 +53,7 @@ RUN set -x \
 
 RUN set -x \
         && echo 'instantclient,/opt/oracle/instantclient_18_5/' | pecl install \
-                oci8-2.2.0 \
+                oci8 \
         && yes '' | pecl install -f \
                 mcrypt
 
