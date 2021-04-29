@@ -53,7 +53,7 @@ RUN set -x \
 
 RUN set -x \
         && echo 'instantclient,/opt/oracle/instantclient_18_5/' | pecl install \
-                oci8 \
+                oci8-2.2.0 \
         && yes '' | pecl install -f \
                 mcrypt
 
